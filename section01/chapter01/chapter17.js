@@ -53,3 +53,10 @@ console.log(item1, item2);
   
 arrC[0] = "hello"; 
 console.log(arrC); 
+
+let array3 = new Array();
+array3.push("소영");
+console.log(array3);
+
+arrC.pust(10);
+console.log(arrC);s
