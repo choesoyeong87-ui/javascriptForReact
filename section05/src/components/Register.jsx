@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRef } from "react";
 //회원가입폼
 //1. 이름 2. 생년월일 3. 국적 4. 자기소개
 const Register = ()=> {
@@ -8,11 +9,31 @@ const Register = ()=> {
         national:'',
         bio:''
     });
+    
+    // 참조관리(카운트 countRet.current = 0)
+    const countRef = useRef(0);
+    const inputNameRef = useRef();
+    const inputBioRef = useRef();
+
+    
+    
     const onChange =(e)=>{
+    
+        console.log(`cirrent = ${countRef.current}`);
         setInput({
             ...input,
             [e.target.name]:e.target.value
         });
+    }
+    const onSubmit = (e)=>{
+        if(input.name === ""){
+            inputNameRef.current.focus();
+            console.log(inputNameRef);
+        }
+        if(input.name === ""){
+            inputBioRef.current.focus();
+            console.log(inputBioRef);
+        }
     }
     // // const [name,setName] = useState("이름입력");
     // // const [birth,setBirth] = useState("");
@@ -59,7 +80,7 @@ const Register = ()=> {
     return<>
     <div>
         <label htmlFor="name">성명</label>
-        <input value={input.name} type="text" name="name" id="name" onChange={onChange}/>
+        <input value={input.name} ref={inputNameRef} type="text" name="name" id="name" onChange={onChange}/>
     </div>
 
     <div>
@@ -81,7 +102,13 @@ const Register = ()=> {
         <label htmlFor="blo">자기소개</label>
         <textarea value={input.bio} name="bio" id="bio" cols="30" rows="10" onChange={onChange}></textarea>
     </div>
+    <div>
+        <button type="button" onClick={onSubmit}>
+        제출
+        </button>
+    </div>
     </>
+    
 
 }
 export default Register;
