@@ -1,9 +1,10 @@
+import { TodoStateContext } from '../App';
 import '../css/Editor.css'
 import { useRef, useState, useContext } from 'react';
-import { TodoContext } from '../App';
+
 
 const Editor =()=>{
-  const {onCreate}= useContext(TodoContext);
+  const {onCreate}= useContext(TodoStateContext);
   const [content, setContent] = useState('');
   const inputRef = useRef();
   const onClickBt = ()=>{

@@ -1,16 +1,15 @@
-import '../css/Header.css'
-import { memo } from 'react';
 
-const Header =({count})=>{
-console.log(`HEADER ${count}`)
-    return<>
-    <div className="Header">
-    <h3>오늘은 달력📆</h3> 
-      <h1>{new Date().toDateString()}</h1> 
-    </div>
-    
-    </>
-
+ import "./Header.css"; 
+ 
+const Header = ({ title, leftChild, rightChild }) => { 
+  return  <>
+    <header className="Header"> 
+      <div className="header_left">{leftChild}</div> 
+      <div className="header_center">{title}</div> 
+      <div className="header_right">{rightChild}</div> 
+    </header>
+  
+ </> 
 }
-const memonizedHeader = memo(Header);
-export default memonizedHeader;
+
+export default Header;

@@ -1,87 +1,91 @@
 import './App.css'
-import Header from './components/Header'
-import Editor from './components/Editor'
-import List from './components/List'
-import './css/App.css'
-import { useState, useRef, useReducer, useCallback, createContext ,useMemo} from 'react'
-import Exam from './components/Exam'
+import { Route, Routes} from 'react-router-dom'
+import Home from './components/Home'
+import Diary from './components/Diary'
+import New from './components/New'
+import Edit from './components/Edit'
+import NotFound from './components/NotFound'
+import { createContext, useReducer, useRef} from 'react'
 
+//가상데이터
 const mockData = [ 
   { 
-    id: 0, 
-    isDone: false, 
-    content: "React 공부하기", 
-    date: new Date().getTime(), 
-  }, 
-  { 
     id: 1, 
-    isDone: false, 
-    content: "스프링부트공부하기", 
-    date: new Date().getTime(), 
+    createdDate: new Date(2026,1,1).getTime(), 
+    emotionId: 1, 
+    content: "1번 일기 내용", 
   }, 
   { 
     id: 2, 
-    isDone: false, 
-    content: "자바공부하기", 
-    date: new Date().getTime(), 
+    createdDate: new Date().getTime(2026,1,2), 
+    emotionId: 2, 
+    content: "2번 일기 내용", 
+  }, 
+  { 
+    id: 3, 
+    createdDate: new Date(2026,0,1).getTime(), 
+    emotionId: 3, 
+    content: "3번 일기 내용", 
   }, 
 ]; 
-
-function reducer(todos, action) {
+ 
+//useReducer
+function reducer(state, action) {
   switch (action.type) {
-    case "onCreate":
-
-      return [action.data, ...todos];
-    case "onUpdate":
-
-      return todos.map(todo => todo.id === action.data? {...todo, isDone: !todo.isDone}: todo);
-    case "onDelete":
-
-      return todos.filter(todo => todo.id !== action.data);
-
+    case "CREATE":
+      return [action.date, ...state];
+    case "UPDATE":
+      return state.map(item=>item.id === action.id ? action.data : item);
+    case "DELETE":
+      return state.filter(item=> item.id !== action.id);
     default:
-      return todos;
+      return null;
   }
 }
+//props내용을 공동으로 공유할 장소 설정
+  export const DiaryStateContext= createContext();
+  export const DiaryDispatchContext= createContext()
 
-//공용으로 사용되는 저장소
-export const TodoStateContext =createContext();
-export const TodoDispatchContext =createContext();
- 
-function App() { 
-  const [count, setCount] = useState(10);
-  const [todos, dispatch] = useReducer(reducer, mockData);
-  //const [todos, setTodos] = useState(mockData);
-  const idRef = useRef(3);
-
-  //이벤트함수(setTodos 생성, 핸들러함수)
-  const onCreate = useCallback(content => dispatch({type:"onCreate", data:{ 
-      id: idRef.current++, 
-      isDone: false, 
-      content: content, 
-      date: new Date().getTime(), 
-    }}),[]);
-
-  //이벤트함수(setTodos(데이터) 수정)
-  const onUpdate = useCallback(id =>dispatch({type:"onUpdate", data:id}),[])
-  const onDelete = useCallback(id => dispatch({type:"onDelete", data: id}),[])
-//이벤트핸들러기능을 딱 한번 실행한다.
-const memonixxedDispatch = useMemo(()=>{
-  return{onCreate, onUpdate, onDelete}
-},[onCreate, onUpdate, onDelete]);
-
+function App() {
+  const [state, dispatch] = useReducer(reducer, mockData);
+  const idRef =useRef(4);
+  //이벤트처리 onCreate, onUpdate, onDelete
+  const onCreate = (createdDate, emotionId, content)=>{
+    const newItem = {
+      id: idRef.current++,
+      createdDate,
+      emotionId,
+      content
+    }
+    dispatch({type:"CREATE", data:newItem});
+  }
+  const onUpdate = (id,createdDate, emotionId, content)=>{
+    const newItem = {
+      id,
+      createdDate,
+      emotionId,
+      content
+    }
+    dispatch({type:"UPDATE", data:newItem});
+  }
+  const onDelete = (id)=>{
+    dispatch({type:"DELETE", id});
+  }
+  
   return (
     <>
-      <div className="App">
-        <Header count={count}/>
-        <TodoStateContext.Provider value={{todos}}>
-          <TodoDispatchContext.Provider value={{memonixxedDispatch}}>
-        <Exam/>
-        <Editor/>
-        <List/>
-           </TodoDispatchContext.Provider>
-           </TodoStateContext.Provider>
-      </div>
+    <DiaryStateContext.Provider value={state}>
+      <DiaryDispatchContext.Provider value={{onCreate,onUpdate,onDelete}}>
+      <Routes>
+        <Route path='/' element={<Home/>}/>
+        <Route path='/new' element={<New/>}/>
+        <Route path='/diary/:id' element={<Diary/>}/>
+        <Route path='/edit/:id' element={<Edit/>}/>
+        <Route path='*' element={<NotFound/>}/>
+      </Routes>
+      </DiaryDispatchContext.Provider>
+      </DiaryStateContext.Provider>
+      
     </>
   )
 }
