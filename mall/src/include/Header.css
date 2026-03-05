@@ -24,13 +24,13 @@
   align-items: center; 
 } 
  
+
 /* 링크 공통 스타일 */ 
 .nav-link { 
   color: rgba(255, 255, 255, 0.8); 
   text-decoration: none; 
   font-size: 1rem; 
   font-weight: 500; 
-  transition: color 0.2s; 
 } 
  
 .nav-link:hover { 
@@ -41,17 +41,19 @@
 .nav-dropdown { 
   position: relative; 
 } 
- 
+
+ .nav-dropdown .nav-link{ 
+  color:  black;
+}
 .dropdown-toggle { 
   background: none; 
   border: none; 
   color: white; 
-25  
   cursor: pointer; 
   font-size: 1rem; 
   font-weight: 500; 
   padding: 0; 
-} 
+}
  
 /* 드롭다운 실제 메뉴 박스 */ 
 .dropdown-menu { 

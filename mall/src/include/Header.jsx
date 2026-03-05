@@ -1,15 +1,21 @@
 import "./Header.css";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Header(){
     const [isDropdownOpen, setIsDropdownOpen ] = useState(false);
+
+    const toggleDropdown = () =>{
+        setIsDropdownOpen(!isDropdownOpen)
+    }
 
     return<>
       <nav className="custom-navbar"> 
       <div className="nav-container"> 
         <div className="nav-left"> 
-          <a href="/" className="nav-link"> MAIN </a> 
-          <a href="/about" className="nav-link"> ABOUT </a> 
+          <Link to="/" className="nav-link">MAIN</Link>
+          <Link to="/about" className="nav-link">ABOUT</Link>
+          
  
           {/* 드롭다운 영역 */} 
           <div className="nav-dropdown"> 
@@ -19,18 +25,20 @@ export default function Header(){
  
             {isDropdownOpen && ( 
               <ul className="dropdown-menu"> 
-                <li><a href="/todo/list">LIST</a> </li> 
-                <li> <a href="/todo/add">ADD</a></li> 
+                <li><Link to="/todo/list" className="nav-link">LIST</Link> </li> 
+                <li> <Link to="/todo/add" className="nav-link">ADD</Link></li> 
+                <li> <Link to="/todo/read/24" className="nav-link">READ</Link></li> 
+                <li> <Link to="/todo/modify" className="nav-link">MODIFY</Link></li> 
                 <li className="divider"></li> 
-                <li> <a href="#">예비용</a></li> 
+                <li> <Link to="#" className="nav-link">예비용</Link></li> 
               </ul> 
             )} 
           </div> 
         </div> 
         <div className="nav-right"> 
-          <a href="#" className="nav-link"> 
-            Login 
-          </a> 
+           <Link to="/login" className="nav-link">Login</Link>
+          
+       
         </div> 
       </div> 
     </nav>
