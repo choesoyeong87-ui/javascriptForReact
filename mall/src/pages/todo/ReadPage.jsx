@@ -1,16 +1,24 @@
 import Header from "../../include/Header";
-import { useParams, useNavigate} from "react-router-dom";
+import { useParams, useNavigate , useSearchParams, createSearchParams} from "react-router-dom";
+import { useCallback } from "react";
 import "./ListPage.css"
 
 const ReadPage = () =>{
     const {tno} = useParams();
     const navigate = useNavigate();
+    const [queryParams] = useSearchParams();
+
+    const page = queryParams.get("page")?parseInt(queryParams.get("page")):(1);
+    const size = queryParams.get("page")?parseInt(queryParams.get("size")):(10);
+    //?page=1&size=10
+    const queryStr = createSearchParams({page,size}).toString();
+
     //동적페이지 이동
-    const moveModify = ()=>{
+    const moveModify = useCallback( ()=>{
         navigate({
-            pathname:`/todo/modify/${tno}`
+            pathname:`/todo/modify/${tno}`,search:queryStr
         });
-    }
+    },[navigate,tno,queryStr]);
 return<>
     <div className="main-container">
         <Header/>
