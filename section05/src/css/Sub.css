@@ -1,0 +1,13 @@
+#login{
+    background-color: aquamarine;
+    font-weight: 700;
+    color: brown;
+    border-bottom: 2px solid black;
+}
+
+.logout{
+    background-color: rgb(236, 95, 39);
+    font-weight: 700;
+    color: brown;
+    border-bottom: 2px solid black;
+}
