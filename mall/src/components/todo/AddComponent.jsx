@@ -1,7 +1,7 @@
 import { useState } from "react";
 import useCustomMove from "../../hooks/useCustomMove";
-import InfoModal from "../common/InfoModal";
 import { postAdd } from "../../api/todoApi";
+import InfoModal from "../common/InfoModal";
 import "./AddComponent.css"; // CSS 파일 임포트
 
 const initState = {
@@ -13,9 +13,9 @@ const initState = {
 
 export default function AddComponent() {
   const [todo, setTodo] = useState({ ...initState });
-  //api 서버에 저장된 번호
+  //API 서버에 저장된 번호
   const [result, setResult] = useState(null);
-  //모달창을 isShow 할건지
+  //모달창 isShow
   const [infoModalOn, setInfoModalOn] = useState(false);
   const { moveToList } = useCustomMove();
 
@@ -31,30 +31,30 @@ export default function AddComponent() {
     postAdd(todo)
       .then((data) => {
         console.log(data);
-        //입력값이 성공된 결과값 저장
+        //입력이성공된 번호를 저장
         setResult(data.TNO);
-        setInfoModalOn(true); // 모달 오픈
-        setTodo({ ...initState }); // 입력 필드 초기화
+        //모달창 보여주는것을 결정
+        setInfoModalOn(true);
+        //입력필드초기화
+        setTodo({ ...initState });
       })
-      .catch((e) => {
-        console.error(e);
-      });
+      .catch((e) => console.error(e));
   };
 
   const closeModal = () => {
     //모달창을 isShow 감춤
     setInfoModalOn(false);
-    moveToList(); // 목록으로 이동
+    // 목록으로 이동
+    moveToList();
   };
 
-  127;
   return (
     <div className="add-container">
       {/* 등록 완료 알림 모달 */}
       <InfoModal
         show={infoModalOn}
-        title={`ADD RESULT`}
-        content={`New ${result} Added`}
+        title={"todo 저장결과"}
+        content={`New ${result} 저장완료`}
         callbackFn={closeModal}
       />
 

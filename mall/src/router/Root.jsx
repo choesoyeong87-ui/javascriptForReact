@@ -1,22 +1,31 @@
 import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Loading from "../pages/Loading";
+//1. 라우터(컨트롤러 대상이 되는 페이지를 가져와야된다)
+const Main = lazy(() => import("../pages/MainPage"));
+const About = lazy(() => import("../pages/AboutPage"));
 
-//라이터(컨ㄴ트롤러 대상이 되는 패이지를 가져와야한다)
-const MainPage = lazy(() => import("../pages/MainPage"));
-const AboutPage = lazy(() => import("../pages/AboutPage"));
-const LoginPage = lazy(() => import("../pages/LoginPage"));
-const ListPage = lazy(() => import("../pages/todo/ListPage"));
-const ReadPage = lazy(() => import("../pages/todo/ReadPage"));
-const Modify = lazy(() => import("../pages/todo/Modify"));
+//**** todo ****
+const List = lazy(() => import("../pages/todo/ListPage"));
+const Read = lazy(() => import("../pages/todo/ReadPage"));
+const Modify = lazy(() => import("../pages/todo/ModifyPage"));
 const Add = lazy(() => import("../pages/todo/AddPage"));
+//**** product ****
+const ProductListPage = lazy(() => import("../pages/product/ListPage"));
+const ProductAddPage = lazy(() => import("../pages/product/AddPage"));
+const ProductReadPage = lazy(() => import("../pages/product/ReadPage"));
+const ProductModifyPage = lazy(() => import("../pages/product/ModifyPage"));
+//**** member ****
+const LoginPage = lazy(() => import("../pages/member/LoginPage"));
+const LogoutPage = lazy(() => import("../pages/member/LogoutPage"));
+const KakaoRedirect = lazy(() => import("../pages/member/KakaoRedirectPage"));
 
 const Root = createBrowserRouter([
   {
     path: "/",
     element: (
       <Suspense fallback={<Loading />}>
-        <MainPage />
+        <Main />
       </Suspense>
     ),
   },
@@ -24,23 +33,17 @@ const Root = createBrowserRouter([
     path: "/about",
     element: (
       <Suspense fallback={<Loading />}>
-        <AboutPage />
+        <About />
       </Suspense>
     ),
   },
-  {
-    path: "/login",
-    element: (
-      <Suspense fallback={<Loading />}>
-        <LoginPage />
-      </Suspense>
-    ),
-  },
+
+  //**** todo ****
   {
     path: "/todo/list",
     element: (
       <Suspense fallback={<Loading />}>
-        <ListPage />
+        <List />
       </Suspense>
     ),
   },
@@ -48,7 +51,7 @@ const Root = createBrowserRouter([
     path: "/todo/read/:tno",
     element: (
       <Suspense fallback={<Loading />}>
-        <ReadPage />
+        <Read />
       </Suspense>
     ),
   },
@@ -65,6 +68,64 @@ const Root = createBrowserRouter([
     element: (
       <Suspense fallback={<Loading />}>
         <Add />
+      </Suspense>
+    ),
+  },
+  //**** product ****
+  {
+    path: "/product/list",
+    element: (
+      <Suspense fallback={<Loading />}>
+        <ProductListPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/product/read/:pno",
+    element: (
+      <Suspense fallback={<Loading />}>
+        <ProductReadPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/product/modify/:pno",
+    element: (
+      <Suspense fallback={<Loading />}>
+        <ProductModifyPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/product/add",
+    element: (
+      <Suspense fallback={<Loading />}>
+        <ProductAddPage />
+      </Suspense>
+    ),
+  },
+  //**** member ****
+  {
+    path: "/member/login",
+    element: (
+      <Suspense fallback={<Loading />}>
+        <LoginPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/member/logout",
+    element: (
+      <Suspense fallback={<Loading />}>
+        <LogoutPage />
+      </Suspense>
+    ),
+  },
+  {
+    path: "/member/kakao",
+    element: (
+      <Suspense fallback={<Loading />}>
+        <KakaoRedirect />
       </Suspense>
     ),
   },

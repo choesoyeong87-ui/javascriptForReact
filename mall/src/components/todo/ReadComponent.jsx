@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { getOne } from "../../api/todoApi";
-import "./ReadComponent.css"; // CSS 파일 임포트
+import useCustomMove from "../../hooks/useCustomMove";
+import "./ReadComponent.css";
+
 const initState = {
   tno: 0,
   title: "",
@@ -8,8 +10,9 @@ const initState = {
   dueDate: null,
   complete: false,
 };
-const ReadComponent = ({ tno, moveToList, moveToModify }) => {
+const ReadComponent = ({ tno }) => {
   const [todo, setTodo] = useState(initState); //아직 todo는 사용하지 않음
+  const { moveToList, moveToModify } = useCustomMove();
   //마운트기능
   useEffect(() => {
     getOne(tno).then((data) => {
@@ -30,7 +33,6 @@ const ReadComponent = ({ tno, moveToList, moveToModify }) => {
           value={todo.complete ? "Completed" : "Not Yet"}
         />
       </div>
-
       {/* 버튼 컨트롤 영역 */}
       <div className="button-group">
         <button

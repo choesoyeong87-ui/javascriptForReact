@@ -1,25 +1,26 @@
 import { Link } from "react-router-dom";
 import Header from "../include/Header";
-import "./MainPage.css"
+import "./MainPage.css";
 
-const MainPage = () =>{
-
-
-return<>
-    <div className="main-container">
-        <Header/>
+const MainPage = () => {
+  return (
+    <>
+      <div className="main-container">
+        <Header />
         <div>
-            <Link to={"/todo/list?page=3&size=20"}>ABOUT PAGE</Link> <br/>
-            <a href="/about"> ABOUT PAGE </a> 
+          <Link to={"/todo/list?page=3&size=20"}>List PAGE</Link> <br />
+          <a href="/about">A ABOUT PAGE</a>
         </div>
         <main className="content-area">
-            <div className="button-wrapper">
-                <button type="button" className="custom-btn-outline" >Main Page
-                </button>
-            </div>
+          <div className="button-wrapper">
+            <button type="button" className="custom-btn-outline">
+              Main Page
+            </button>
+          </div>
         </main>
+      </div>
+    </>
+  );
+};
 
-    </div>
-</>
-}
 export default MainPage;

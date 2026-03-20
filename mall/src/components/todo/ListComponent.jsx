@@ -16,7 +16,7 @@ const initState = {
   totalPage: 0,
   current: 0,
 };
-//마운틩 : 처음로딩될때, page,size가 바뀔때
+
 const ListComponent = () => {
   const { page, size, moveToRead, moveToList, refresh } = useCustomMove();
   const [serverData, setServerData] = useState(initState);
